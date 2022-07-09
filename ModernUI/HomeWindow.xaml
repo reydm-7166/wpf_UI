@@ -67,9 +67,6 @@
                     Margin="46,159,0,111"
                     Width="289" Grid.RowSpan="2" 
                     Grid.Row="1">
-                <Grid>
-                    <Button x:Name="button_click" Margin="5,00" Height="40" Width="150" Content="Click me"/>
-                </Grid>
 
                 <Button x:Name="button_CreateTicket" Content="Create Ticket" 
                             Foreground="#F8FEFA" 
