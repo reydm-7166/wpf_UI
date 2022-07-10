@@ -61,7 +61,7 @@
             </Grid.RowDefinitions>
 
             <!--Page Title-->
-            <TextBlock x:Name="titleText" Text="Dashboard" Style="{StaticResource pageTitle}" Margin="-15,16,15,353" Grid.Row="1"/>
+            <TextBlock x:Name="titleText" Text="Dashboard" Style="{StaticResource pageTitle}" Margin="-1,16,1,353" Grid.Row="1"/>
             <!--Page Content-->
 
             <Grid HorizontalAlignment="Left" 
@@ -111,7 +111,9 @@
             </Grid>
 
             <Grid Grid.RowSpan="3" Margin="238,83,30,32">
-                <Border BorderThickness="1" BorderBrush="white"/>
+
+                <!--TICKET TITLE TEXTBOX-->
+                
                 <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="31,30,667,531" CornerRadius="5">
                     <Grid Margin="7 9">
                         <Grid.ColumnDefinitions>
@@ -129,7 +131,86 @@
                                  Height="22" TextChanged="txtbox_TicketTitle_TextChanged"/>
                     </Grid>
                 </Border>
+                
+                <!--TICKET PROBLEM TEXTBOX-->
+                
+                <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="29,108,669,453" CornerRadius="5">
+                    <Grid Margin="7 9">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
+                        <TextBlock x:Name="text_TicketProblem" 
+                                   Text="Ticket Problem" 
+                                   Style="{StaticResource textHint}" 
+                                   MouseDown="text_TicketTitle_MouseDown" />
+                        <TextBox Name="txtbox_TicketProblem"
+                                 Style="{StaticResource textBox}"
+                                 Background="transparent"
+                                 Height="22" TextChanged="txtbox_TicketTitle_TextChanged"/>
+                    </Grid>
+                </Border>
+                
+                <!--TICKET DETAILS TEXTBOX-->
+                
+                <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="27,190,671,371" CornerRadius="5">
+                    <Grid Margin="7 9">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="text_TicketDetails" 
+                                   Text="Ticket Details" 
+                                   Style="{StaticResource textHint}" 
+                                   MouseDown="text_TicketTitle_MouseDown" />
+                        <TextBox Name="txtbox_TicketDetails"
+                                 Style="{StaticResource textBox}"
+                                 Background="transparent"
+                                 Height="22" TextChanged="txtbox_TicketTitle_TextChanged"/>
+                    </Grid>
+                </Border>
+
+                <!--TICKET ASIGNED TO TEXTBOX-->
+
+                <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="27,270,671,291" CornerRadius="5">
+                    <Grid Margin="7 9">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="text_TicketAssignedTo" 
+                                   Text="Assigned To" 
+                                   Style="{StaticResource textHint}" 
+                                   MouseDown="text_TicketTitle_MouseDown" />
+                        <TextBox Name="txtbox_TicketAssignedTo"
+                                 Style="{StaticResource textBox}"
+                                 Background="transparent"
+                                 Height="22" TextChanged="txtbox_TicketTitle_TextChanged"/>
+                    </Grid>
+                </Border>
+                
+                <!--TICKET STATUS TEXTBOX-->
+
+                <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="25,350,673,211" CornerRadius="5">
+                    <Grid Margin="7 9">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="text_TicketStatus" 
+                                   Text="Ticket Status" 
+                                   Style="{StaticResource textHint}" 
+                                   MouseDown="text_TicketTitle_MouseDown" />
+                        <TextBox Name="txtbox_TicketStatus"
+                                 Style="{StaticResource textBox}"
+                                 Background="transparent"
+                                 Height="22" TextChanged="txtbox_TicketTitle_TextChanged"/>
+                    </Grid>
+                </Border>
 
             </Grid>
 
