@@ -8,7 +8,7 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
-        <Window.Resources>
+    <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -30,6 +30,7 @@
                                 <Setter TargetName="border" Property="Background" Value="Green"></Setter>
                                 <Setter TargetName="cp" Property="TextBlock.Foreground" Value="White"></Setter>
                                 <Setter TargetName="border" Property="CornerRadius" Value="5"></Setter>
+                                <Setter TargetName="border" Property="Cursor" Value="Hand"></Setter>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="Green"></Setter>
@@ -42,7 +43,7 @@
         </Style>
 
 
-            
+
     </Window.Resources>
     <Border CornerRadius="5" MouseLeftButtonDown="Grid_MouseLeftButtonDown" MouseDown="Grid_MouseDown">
         <Border.Background>
@@ -52,20 +53,20 @@
             </LinearGradientBrush>
         </Border.Background>
 
-        <Grid>
+        <Grid Margin="3,16,-3,-16">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto" MinHeight="425"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
             <!--Page Title-->
             <TextBlock x:Name="titleText" Text="Dashboard" Style="{StaticResource pageTitle}" Margin="-15,16,15,353" Grid.Row="1"/>
             <!--Page Content-->
 
             <Grid HorizontalAlignment="Left" 
-                    Margin="46,159,0,111"
-                    Width="289" Grid.RowSpan="2" 
+                    Margin="13,159,0,111"
+                    Width="245" Grid.RowSpan="2" 
                     Grid.Row="1">
 
                 <Button x:Name="button_CreateTicket" Content="Create Ticket" 
@@ -109,6 +110,34 @@
                             BorderBrush="Transparent"/>
             </Grid>
 
+            <Grid Grid.RowSpan="3" Margin="238,83,30,32">
+                <Border BorderThickness="1" BorderBrush="white"/>
+                <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="31,30,667,531" CornerRadius="5">
+                    <Grid Margin="7 9">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="text_TicketTitle" 
+                                   Text="Ticket Title" 
+                                   Style="{StaticResource textHint}" 
+                                   MouseDown="text_TicketTitle_MouseDown" />
+                        <TextBox Name="txtbox_TicketTitle"
+                                 Style="{StaticResource textBox}"
+                                 Background="transparent"
+                                 Height="22" TextChanged="txtbox_TicketTitle_TextChanged"/>
+                    </Grid>
+                </Border>
+
+
+            </Grid>
+
+
+
+
         </Grid>
     </Border>
+
+
 </Window>

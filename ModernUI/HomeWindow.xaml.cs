@@ -59,5 +59,20 @@ namespace ModernUI
             }
         }
 
+        private void text_TicketTitle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            txtbox_TicketTitle.Focus();
+        }
+
+        private void txtbox_TicketTitle_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+            if (!string.IsNullOrEmpty(txtbox_TicketTitle.Text) && txtbox_TicketTitle.Text.Length > 0)
+                text_TicketTitle.Visibility = Visibility.Collapsed;
+            else
+                text_TicketTitle.Visibility = Visibility.Visible;
+        }
     }
+
+  
 }
