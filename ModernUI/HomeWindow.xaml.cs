@@ -22,6 +22,8 @@ namespace ModernUI
         public HomeWindow()
         {
             InitializeComponent();
+            //text_TicketAssignedTo.Text = String.Empty;
+            //txtbox_TicketAssignedTo.Text = "PREDEFINED"l
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -59,6 +61,8 @@ namespace ModernUI
             }
         }
 
+        /////// TICKET TITLE  //////////////
+
         private void text_TicketTitle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             txtbox_TicketTitle.Focus();
@@ -72,7 +76,57 @@ namespace ModernUI
             else
                 text_TicketTitle.Visibility = Visibility.Visible;
         }
+
+        /////// TICKET PROBLEM  //////////////
+        ///
+        private void text_TicketProblem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            txtbox_TicketProblem.Focus();
+        }
+
+        private void txtbox_TicketProblem_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(txtbox_TicketProblem.Text) && txtbox_TicketProblem.Text.Length > 0)
+                text_TicketProblem.Visibility = Visibility.Collapsed;
+            else
+                text_TicketProblem.Visibility = Visibility.Visible;
+        }
+
+
+        /////// TICKET DETAILS  //////////////
+        ///
+        private void text_TicketDetails_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            txtbox_TicketDetails.Focus();
+        }
+
+        private void txtbox_TicketDetails_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(txtbox_TicketDetails.Text) && txtbox_TicketDetails.Text.Length > 0)
+                text_TicketDetails.Visibility = Visibility.Collapsed;
+            else
+                text_TicketDetails.Visibility = Visibility.Visible;
+        }
+
+        /////// TICKET REPORTED BY THE USER ID  //////////////
+
+        private void text_customerID_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            txtbox_customerID.Focus();
+        }
+
+        private void txtbox_customerID_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(txtbox_customerID.Text) && txtbox_customerID.Text.Length > 0)
+                text_customerID.Visibility = Visibility.Collapsed;
+            else
+                text_customerID.Visibility = Visibility.Visible;
+        }
     }
 
-  
+    
+
 }

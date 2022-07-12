@@ -28,12 +28,13 @@ namespace ModernUI
         // THIS IS THE PARENT CONNECTION CLASS.
         // I SEPERATED IT TO AVOID REPITITION
         ///////////////////////////////////////////////
-        public class mainConnectionClass
+        public static class mainConnectionClass
         {
-            private static string connect_query = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
-            public MySqlConnection conn = new MySqlConnection(connect_query);
 
-            public string query = "";
+            private static string connect_query = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
+            public static MySqlConnection conn = new MySqlConnection(connect_query);
+
+            public static string query = "SELECT * FROM users WHERE username=@username && password=@password";
         }
 
         private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -66,6 +67,12 @@ namespace ModernUI
             // THIS CHECKS THE FIELD OF USERNAME AND
             // PASSWORD IF NOT EMPTY. 
             ///////////////////////////////////////////////
+            MySqlCommand command = new MySqlCommand(mainConnectionClass.query, mainConnectionClass.conn);
+
+            command.Parameters.AddWithValue("@username", txtbox_Username.Text);
+            command.Parameters.AddWithValue("@password", txtbox_Password.Password);
+
+            mainConnectionClass.conn.Open();
             if (!string.IsNullOrEmpty(txtbox_Username.Text) && !string.IsNullOrEmpty(txtbox_Password.Password))
             {
 
@@ -75,18 +82,7 @@ namespace ModernUI
                 // 
                 // PASSWORD IF NOT EMPTY. 
                 ///////////////////////////////////////////////
-                mainConnectionClass childConnectionClass = new mainConnectionClass();
-
-                childConnectionClass.conn.Open();
-
-                childConnectionClass.query = "SELECT * FROM users WHERE username=@username && password=@password";
-
-                MySqlCommand command = new MySqlCommand(childConnectionClass.query, childConnectionClass.conn);
-
-
-                command.Parameters.AddWithValue("@username", txtbox_Username.Text);
-                command.Parameters.AddWithValue("@password", txtbox_Password.Password);
-
+                ///
                 ///////////////////////////////////////////////
                 // This returns the result from the query above
                 // Line: 82. 
@@ -102,10 +98,12 @@ namespace ModernUI
                         //txtbox_Username.Clear();
                         //txtbox_Password.Clear();
                         this.Close();
+                        mainConnectionClass.conn.Close();
                         HomeWindow.Show();
                     }
                     else
                     {
+                        mainConnectionClass.conn.Close();
                         MessageBox.Show("mali bonak");
                     }
                 }
