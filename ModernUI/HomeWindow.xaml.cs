@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
+
+
 namespace ModernUI
 {
     /// <summary>
@@ -23,8 +25,12 @@ namespace ModernUI
         {
             InitializeComponent();
             //text_TicketAssignedTo.Text = String.Empty;
-            //txtbox_TicketAssignedTo.Text = "PREDEFINED"l
+            //txtbox_TicketAssignedTo.Text = "PREDEFINED"
+            Random rnd = new Random();
+            txtbox_ticketID.Text = rnd.Next(100, 100000).ToString();
         }
+
+
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
@@ -110,21 +116,37 @@ namespace ModernUI
                 text_TicketDetails.Visibility = Visibility.Visible;
         }
 
+        private void button_Insert_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.mainConnectionClass.query = "INSERT INTO mydb.tickets(user_id, number, issue_title, problem, details, reported_by_id, reported_by_name, assigned_to, status) VALUES('" + int.Parse(txtbox_ReportedByStaffID.Text) + "','" + txtbox_ticketID.Text + "','" + text_TicketTitle.Text + "','" + text_TicketProblem.Text + "','" + text_TicketDetails.Text + "','" + txtbox_ReportedByStaffID.Text + "','" + txtbox_ReportedByStaffName.Text + "','" + int.Parse(combobox_AssignedTo.Text) + "','" + combobox_TicketStatus.Text + "')";
+
+            MainWindow.mainConnectionClass.conn.Open();
+            MySqlCommand command = new MySqlCommand(MainWindow.mainConnectionClass.query, MainWindow.mainConnectionClass.conn);
+
+            try
+            {
+                if (command.ExecuteNonQuery() == 1)
+                {
+                    MessageBox.Show("Data Inserted");
+                }
+                else
+                {
+                    MessageBox.Show("Data Not Inserted");
+                }
+                MainWindow.mainConnectionClass.conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            MainWindow.mainConnectionClass.conn.Close();
+        }
+
+
+
         /////// TICKET REPORTED BY THE USER ID  //////////////
 
-        private void text_customerID_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            txtbox_customerID.Focus();
-        }
-
-        private void txtbox_customerID_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-            if (!string.IsNullOrEmpty(txtbox_customerID.Text) && txtbox_customerID.Text.Length > 0)
-                text_customerID.Visibility = Visibility.Collapsed;
-            else
-                text_customerID.Visibility = Visibility.Visible;
-        }
     }
 
     

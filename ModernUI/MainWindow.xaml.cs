@@ -35,6 +35,9 @@ namespace ModernUI
             public static MySqlConnection conn = new MySqlConnection(connect_query);
 
             public static string query = "SELECT * FROM users WHERE username=@username && password=@password";
+
+            public static string staffID = "";
+            public static string staffName = "";
         }
 
         private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -93,13 +96,25 @@ namespace ModernUI
 
                     if (reader.HasRows)
                     {
-                        HomeWindow HomeWindow = new HomeWindow();
-                        MessageBox.Show("Korique credentials");
-                        //txtbox_Username.Clear();
-                        //txtbox_Password.Clear();
-                        this.Close();
+                        while (reader.Read())
+                        {
+                            HomeWindow HomeWindow = new HomeWindow();
+                            txtbox_Username.Clear();
+                            txtbox_Password.Clear();
+
+                            mainConnectionClass.staffID = reader[0].ToString();
+                            mainConnectionClass.staffName = reader[1].ToString() + " " + reader[2].ToString();
+
+
+                            HomeWindow.txtbox_ReportedByStaffID.Text = mainConnectionClass.staffID;
+                            HomeWindow.txtbox_ReportedByStaffName.Text = mainConnectionClass.staffName;
+
+                            this.Close();
+                            HomeWindow.Show();
+
+                            
+                        }
                         mainConnectionClass.conn.Close();
-                        HomeWindow.Show();
                     }
                     else
                     {

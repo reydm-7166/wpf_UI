@@ -463,21 +463,38 @@
                 <!--TICKET ASIGNED TO TEXTBOX-->
 
                 <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="28,396,562,165" CornerRadius="5">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
 
-                        <TextBlock x:Name="text_TicketAssignedTo" 
-                                   Text="Assigned To" 
-                                   Style="{StaticResource textHint}" 
-                                   MouseDown="text_TicketTitle_MouseDown" />
-                        <TextBox x:Name="txtbox_TicketAssignedTo"
-                                 Style="{StaticResource textBox}"
-                                 Background="transparent"
-                                 Height="22" TextChanged="txtbox_TicketTitle_TextChanged"/>
-                    </Grid>
+                    <StackPanel>
+                        <ComboBox Style="{DynamicResource ComboBoxStyle1}" 
+                                x:Name="combobox_AssignedTo"
+                                Background="transparent"
+                                Height="42"
+                                SelectedIndex="0"
+                                FontSize="15" Template="{DynamicResource ComboBoxTemplate}">
+
+                            <TextBlock  Margin="5,3"
+                                        Padding="5,0" 
+                                        IsHitTestVisible="False" 
+                                        FontSize="15" 
+                                        Foreground="Gray" 
+                                        Text="Assign To ..."/>
+
+                            <ComboBoxItem Height="35" FontSize="15">
+                                <TextBlock 
+                                        FontSize="15" 
+                                        Margin="5,3" Padding="5,3"
+                                        Text="1"/>
+                            </ComboBoxItem>
+
+                            <ComboBoxItem Height="35" FontSize="15">
+                                <TextBlock 
+                                        FontSize="15" 
+                                        Margin="5,3" Padding="5,3"
+                                        Text="2"/>
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    
                 </Border>
 
                 <!--TICKET STATUS TEXTBOX-->
@@ -527,14 +544,17 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock x:Name="text_customerID" 
-                            Text="Customer ID" 
+                        <TextBlock x:Name="text_ticketID" 
+                            Text="Ticket ID" 
                             Style="{StaticResource textHint}" 
                             Grid.ColumnSpan="2" Margin="116,1,-122,-1" />
-                        <TextBox x:Name="txtbox_customerID"
+                        <TextBox x:Name="txtbox_ticketID"
                             Style="{StaticResource textBox}"
                             Background="transparent"
-                            Height="22"/>
+                                 FontStyle="Italic"
+                                 FontWeight="Bold"
+                                 Foreground="White"
+                            Height="22" IsEnabled="False"/>
                     </Grid>
                 </Border>
                 <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="548,106,369,455" CornerRadius="5">
@@ -551,7 +571,10 @@
                         <TextBox x:Name="txtbox_ReportedByStaffID"
                             Style="{StaticResource textBox}"
                             Background="transparent"
-                            Height="22"/>
+                                 FontStyle="Italic"
+                                 FontWeight="Bold"
+                                 Foreground="White"
+                            Height="22" IsEnabled="False"/>
                     </Grid>
                 </Border>
 
@@ -568,9 +591,15 @@
                             Grid.ColumnSpan="2" Margin="258,0,-192,0"/>
                         <TextBox x:Name="txtbox_ReportedByStaffName"
                             Style="{StaticResource textBox}"
-                            Background="transparent"/>
+                                 FontStyle="Italic"
+                                 FontWeight="Bold"
+                                 Foreground="White"
+                            Background="transparent" IsEnabled="False"/>
                     </Grid>
                 </Border>
+                
+                
+                <Button x:Name="button_Insert" Content="Insert" Click="button_Insert_Click" Style="{StaticResource mainButton}" Margin="540,458,272,95" />
 
 
 
