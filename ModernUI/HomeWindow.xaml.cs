@@ -37,35 +37,7 @@ namespace ModernUI
             titleText.Text = "Settings";
         }
 
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                this.DragMove();
-            }
-        }
-
-        private bool IsMaximize = false;
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ClickCount == 2)
-            {
-                if (IsMaximize)
-                {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 1280;
-                    this.Height = 780;
-
-                    IsMaximize = false;
-                }
-                else
-                {
-                    this.WindowState = WindowState.Maximized;
-
-                    IsMaximize = true;
-                }
-            }
-        }
+        
 
         /////// TICKET TITLE  //////////////
 
@@ -118,30 +90,49 @@ namespace ModernUI
 
         private void button_Insert_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainConnectionClass.query = "INSERT INTO mydb.tickets(user_id, number, issue_title, problem, details, reported_by_id, reported_by_name, assigned_to, status) VALUES('" + int.Parse(txtbox_ReportedByStaffID.Text) + "','" + txtbox_ticketID.Text + "','" + text_TicketTitle.Text + "','" + text_TicketProblem.Text + "','" + text_TicketDetails.Text + "','" + txtbox_ReportedByStaffID.Text + "','" + txtbox_ReportedByStaffName.Text + "','" + int.Parse(combobox_AssignedTo.Text) + "','" + combobox_TicketStatus.Text + "')";
-
-            MainWindow.mainConnectionClass.conn.Open();
-            MySqlCommand command = new MySqlCommand(MainWindow.mainConnectionClass.query, MainWindow.mainConnectionClass.conn);
+           
 
             try
             {
+                MainWindow.mainConnectionClass.query = "INSERT INTO mydb.tickets(user_id, number, issue_title, problem, details, reported_by_id, reported_by_name, assigned_to, status) VALUES('" + int.Parse(txtbox_ReportedByStaffID.Text) + "','" + txtbox_ticketID.Text + "','" + text_TicketTitle.Text + "','" + text_TicketProblem.Text + "','" + text_TicketDetails.Text + "','" + txtbox_ReportedByStaffID.Text + "','" + txtbox_ReportedByStaffName.Text + "','" + int.Parse(combobox_AssignedTo.Text) + "','" + combobox_TicketStatus.Text + "')";
+
+                MainWindow.mainConnectionClass.conn.Open();
+                MySqlCommand command = new MySqlCommand(MainWindow.mainConnectionClass.query, MainWindow.mainConnectionClass.conn);
+
+            
                 if (command.ExecuteNonQuery() == 1)
                 {
-                    MessageBox.Show("Data Inserted");
+                    MessageBox.Show("Ticket Submitted Successfully");
                 }
                 else
                 {
-                    MessageBox.Show("Data Not Inserted");
+                    MessageBox.Show("Something is wrong! Please check the input carefully");
                 }
                 MainWindow.mainConnectionClass.conn.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Fill up the forms correctly!");
             }
 
             MainWindow.mainConnectionClass.conn.Close();
+
+            
         }
+
+        private void button_ViewTickets_Click(object sender, RoutedEventArgs e)
+        {
+            grid_CreateTicket.Visibility = Visibility.Hidden;
+        }
+
+        private void button_CreateTicket_Click(object sender, RoutedEventArgs e)
+        {
+            if(grid_CreateTicket.Visibility == Visibility.Hidden)
+            {
+                grid_CreateTicket.Visibility = Visibility.Visible;
+            }
+        }
+
 
 
 

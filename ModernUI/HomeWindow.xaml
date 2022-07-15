@@ -329,7 +329,7 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
-    <Border CornerRadius="5" MouseLeftButtonDown="Grid_MouseLeftButtonDown" MouseDown="Grid_MouseDown">
+    <Border CornerRadius="5">
         <Border.Background>
             <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                 <GradientStop Color="#2E3967"/>
@@ -340,7 +340,7 @@
         <Grid Margin="3,16,-3,-16">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto" MinHeight="425"/>
+                <RowDefinition Height="auto" MinHeight="424.863"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
@@ -361,7 +361,7 @@
                             VerticalAlignment="Top"
                             Height="50"
                             Background="Transparent"
-                            BorderBrush="Transparent"/>
+                            BorderBrush="Transparent" Click="button_CreateTicket_Click"/>
 
                 <Button x:Name="button_ViewTickets" Content="View Tickets" 
                             Foreground="#F8FEFA" 
@@ -371,7 +371,7 @@
                             VerticalAlignment="Top"
                             Height="50"
                             Background="Transparent"
-                            BorderBrush="Transparent"/>
+                            BorderBrush="Transparent" Click="button_ViewTickets_Click"/>
 
                 <Button x:Name="button_SignOut" Content="Sign Out" 
                             Foreground="#F8FEFA" 
@@ -394,7 +394,7 @@
                             BorderBrush="Transparent"/>
             </Grid>
 
-            <Grid Grid.RowSpan="3" Margin="238,83,30,32">
+            <Grid Grid.RowSpan="3" Margin="238,83,30,32" x:Name="grid_CreateTicket">
 
                 <!--TICKET TITLE TEXTBOX-->
 
@@ -494,7 +494,7 @@
                             </ComboBoxItem>
                         </ComboBox>
                     </StackPanel>
-                    
+
                 </Border>
 
                 <!--TICKET STATUS TEXTBOX-->
@@ -565,7 +565,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock x:Name="text_ReportedByStaffID" 
-                            Text="Reported By Staff ID" 
+                            Text="Reported By ID" 
                             Style="{StaticResource textHint}" 
                             Grid.ColumnSpan="2" Margin="118,-3,-171,3" />
                         <TextBox x:Name="txtbox_ReportedByStaffID"
@@ -586,7 +586,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock x:Name="text_ReportedByStaffName" 
-                            Text="Reported By Staff Name" 
+                            Text="Reported By Name" 
                             Style="{StaticResource textHint}" 
                             Grid.ColumnSpan="2" Margin="258,0,-192,0"/>
                         <TextBox x:Name="txtbox_ReportedByStaffName"
@@ -597,8 +597,8 @@
                             Background="transparent" IsEnabled="False"/>
                     </Grid>
                 </Border>
-                
-                
+
+
                 <Button x:Name="button_Insert" Content="Insert" Click="button_Insert_Click" Style="{StaticResource mainButton}" Margin="540,458,272,95" />
 
 
