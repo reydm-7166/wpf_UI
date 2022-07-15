@@ -28,6 +28,7 @@ namespace ModernUI
             //txtbox_TicketAssignedTo.Text = "PREDEFINED"
             Random rnd = new Random();
             txtbox_ticketID.Text = rnd.Next(100, 100000).ToString();
+
         }
 
 
@@ -90,8 +91,6 @@ namespace ModernUI
 
         private void button_Insert_Click(object sender, RoutedEventArgs e)
         {
-           
-
             try
             {
                 MainWindow.mainConnectionClass.query = "INSERT INTO mydb.tickets(user_id, number, issue_title, problem, details, reported_by_id, reported_by_name, assigned_to, status) VALUES('" + int.Parse(txtbox_ReportedByStaffID.Text) + "','" + txtbox_ticketID.Text + "','" + text_TicketTitle.Text + "','" + text_TicketProblem.Text + "','" + text_TicketDetails.Text + "','" + txtbox_ReportedByStaffID.Text + "','" + txtbox_ReportedByStaffName.Text + "','" + int.Parse(combobox_AssignedTo.Text) + "','" + combobox_TicketStatus.Text + "')";
@@ -131,6 +130,19 @@ namespace ModernUI
             {
                 grid_CreateTicket.Visibility = Visibility.Visible;
             }
+        }
+
+        private void button_SignOut_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.mainConnectionClass.staffID = "";
+            MainWindow.mainConnectionClass.staffFirstName = "";
+            MainWindow.mainConnectionClass.staffLastName = "";
+            MainWindow.mainConnectionClass.role = "";
+
+            
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Close();
         }
 
 

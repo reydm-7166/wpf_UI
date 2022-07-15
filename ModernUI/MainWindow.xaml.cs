@@ -37,7 +37,9 @@ namespace ModernUI
             public static string query = "SELECT * FROM users WHERE username=@username && password=@password";
 
             public static string staffID = "";
-            public static string staffName = "";
+            public static string staffFirstName = "";
+            public static string staffLastName = "";
+            public static string role = "";
         }
 
         private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -103,11 +105,20 @@ namespace ModernUI
                             txtbox_Password.Clear();
 
                             mainConnectionClass.staffID = reader[0].ToString();
-                            mainConnectionClass.staffName = reader[1].ToString() + " " + reader[2].ToString();
+                            mainConnectionClass.staffFirstName = reader[1].ToString();
+                            mainConnectionClass.staffLastName = reader[2].ToString();
+                            mainConnectionClass.role = reader[5].ToString();
 
 
                             HomeWindow.txtbox_ReportedByStaffID.Text = mainConnectionClass.staffID;
-                            HomeWindow.txtbox_ReportedByStaffName.Text = mainConnectionClass.staffName;
+                            HomeWindow.txtbox_ReportedByStaffName.Text = mainConnectionClass.staffFirstName + " " + mainConnectionClass.staffLastName;
+                            HomeWindow.text_LoggedInAs.Text += mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
+                            HomeWindow.text_LoggedInAs.Text += ", " + mainConnectionClass.staffFirstName;
+
+                            HomeWindow.txtbox_Role.Text = mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
+
+                            _ = mainConnectionClass.role == "1" ? HomeWindow.grid_Supervisor.Visibility = Visibility.Visible : HomeWindow.grid_Supervisor.Visibility = Visibility.Collapsed;
+
 
                             this.Close();
                             HomeWindow.Show();
