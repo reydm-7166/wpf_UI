@@ -337,7 +337,7 @@
             </LinearGradientBrush>
         </Border.Background>
 
-        <Grid x:Name="grid_Supervisor" Margin="3,16,-3,-16" Visibility="Hidden">
+        <Grid x:Name="grid_Supervisor" Margin="3,16,-3,-16" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto" MinHeight="424.863"/>
@@ -638,13 +638,5 @@
 
     </Border>
 
-    <Border CornerRadius="5">
-        <Border.Background>
-            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop Color="#2E3967"/>
-                <GradientStop Color="#192559" Offset="1.0"/>
-            </LinearGradientBrush>
-        </Border.Background>
-
-    </Border>
+   
 </Window>

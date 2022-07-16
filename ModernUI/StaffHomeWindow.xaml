@@ -2,11 +2,73 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModernUI"
-        mc:Ignorable="d"
-        Title="StaffHomeWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="ModernUI.HomeWindow"
+        ResizeMode="NoResize"
+        Height="720" Width="1280" MinHeight="700" MinWidth="650" AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Transparent">
+
+
+
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
+    </WindowChrome.WindowChrome>
+    <Border CornerRadius="5">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="#2E3967"/>
+                <GradientStop Color="#192559" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid HorizontalAlignment="Left" 
+                Margin="12,148,0,122"
+                Width="245">
+
+            <Button x:Name="button_WorkTicket" Content="Work on a Ticket" 
+                    Foreground="#F8FEFA" 
+                    FontSize="25"
+                    Margin="0,50,0,50" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Height="50"
+                    Background="Transparent"
+                    BorderBrush="Transparent" Click="button_CreateTicket_Click"/>
+
+            <Button x:Name="button_ViewMyTickets" Content="View Assigned Tickets" 
+                    Foreground="#F8FEFA" 
+                    FontSize="25"
+                    Margin="0,150,0,50" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Height="50"
+                    Background="Transparent"
+                    BorderBrush="Transparent" Click="button_ViewTickets_Click"/>
+
+            <Button x:Name="button_SignOut" Content="Sign Out" 
+                    Foreground="#F8FEFA" 
+                    FontSize="25"
+                    Margin="0,250,0,50" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Height="50"
+                    Background="Transparent"
+                    BorderBrush="Transparent" Click="button_SignOut_Click"/>
+
+            <Button x:Name="button_Exit" Content="Exit" 
+                    Foreground="#F8FEFA" 
+                    FontSize="25"
+                    Margin="0,350,0,50" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Height="50"
+                    Background="Transparent"
+                    BorderBrush="Transparent"/>
+        </Grid>
         
-    </Grid>
+        
+    </Border>
+    
+
 </Window>
