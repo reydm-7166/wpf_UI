@@ -51,6 +51,10 @@
             "Renci.SshNet.Async": {
               "target": "Package",
               "version": "[1.4.0, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             }
           },
           "imports": [

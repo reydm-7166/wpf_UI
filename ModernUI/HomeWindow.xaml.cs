@@ -28,33 +28,51 @@ namespace ModernUI
             //txtbox_TicketAssignedTo.Text = "PREDEFINED"
             Random rnd = new Random();
             txtbox_ticketID.Text = rnd.Next(100, 100000).ToString();
-
+            combo();
         }
 
-
-
-        private void backButton_Click(object sender, RoutedEventArgs e)
+        void combo()
         {
-            titleText.Text = "Settings";
+            string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
+            MySqlConnection conn = new MySqlConnection(connectionString);
+
+
+            string query = "SELECT * FROM users WHERE role = 2;";
+
+            MySqlCommand command = new MySqlCommand(query, conn);
+            conn.Open();
+
+            try
+            {
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        combobox_AssignedTo.Items.Add(reader.GetString("firstname") + " " + reader.GetString("lastname"));
+
+                    }
+                   conn.Close();
+                }
+                else
+                {
+                    conn.Close();
+                    MessageBox.Show("mali bonak");
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
 
         
 
         /////// TICKET TITLE  //////////////
 
-        private void text_TicketTitle_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            txtbox_TicketTitle.Focus();
-        }
-
-        private void txtbox_TicketTitle_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-            if (!string.IsNullOrEmpty(txtbox_TicketTitle.Text) && txtbox_TicketTitle.Text.Length > 0)
-                text_TicketTitle.Visibility = Visibility.Collapsed;
-            else
-                text_TicketTitle.Visibility = Visibility.Visible;
-        }
 
         /////// TICKET PROBLEM  //////////////
         ///
@@ -93,56 +111,77 @@ namespace ModernUI
         {
             try
             {
-                MainWindow.mainConnectionClass.query = "INSERT INTO mydb.tickets(user_id, number, issue_title, problem, details, reported_by_id, reported_by_name, assigned_to, status) VALUES('" + int.Parse(txtbox_ReportedByStaffID.Text) + "','" + txtbox_ticketID.Text + "','" + text_TicketTitle.Text + "','" + text_TicketProblem.Text + "','" + text_TicketDetails.Text + "','" + txtbox_ReportedByStaffID.Text + "','" + txtbox_ReportedByStaffName.Text + "','" + int.Parse(combobox_AssignedTo.Text) + "','" + combobox_TicketStatus.Text + "')";
+                string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
 
-                MainWindow.mainConnectionClass.conn.Open();
-                MySqlCommand command = new MySqlCommand(MainWindow.mainConnectionClass.query, MainWindow.mainConnectionClass.conn);
+                MySqlConnection conn = new MySqlConnection(connectionString);
 
-            
+                string query = "INSERT INTO mydb.tickets(user_id, number, issue_title, problem, details, reported_by_id, reported_by_name, assigned_to, status) VALUES('" + int.Parse(txtbox_ReportedByStaffID.Text) + "','" + txtbox_ticketID.Text + "','" + combobox_TicketCategory.Text + "','" + txtbox_TicketProblem.Text + "','" + txtbox_TicketDetails.Text + "','" + txtbox_ReportedByStaffID.Text + "','" + txtbox_ReportedByStaffName.Text + "','" + combobox_AssignedTo.Text + "','" + combobox_TicketStatus.Text + "')";
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                conn.Open();
+
+
                 if (command.ExecuteNonQuery() == 1)
                 {
                     MessageBox.Show("Ticket Submitted Successfully");
+                    txtbox_TicketProblem.Clear();
+                    txtbox_TicketDetails.Clear();
+                    combobox_TicketCategory.SelectedIndex = 0;
+                    combobox_AssignedTo.SelectedIndex = 0;
+                    combobox_TicketStatus.SelectedIndex = 0;
                 }
                 else
                 {
                     MessageBox.Show("Something is wrong! Please check the input carefully");
                 }
-                MainWindow.mainConnectionClass.conn.Close();
+                conn.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Fill up the forms correctly!");
+                MessageBox.Show(ex.ToString());
             }
 
-            MainWindow.mainConnectionClass.conn.Close();
 
-            
         }
 
-        private void button_ViewTickets_Click(object sender, RoutedEventArgs e)
+            private void button_ViewTickets_Click(object sender, RoutedEventArgs e)
         {
             grid_CreateTicket.Visibility = Visibility.Hidden;
+            titletext_View.Visibility = Visibility.Visible;
+            titletext_Create.Visibility = Visibility.Collapsed;
+            titletext_Reports.Visibility = Visibility.Collapsed;
+            grid_Report.Visibility = Visibility.Collapsed;
         }
 
         private void button_CreateTicket_Click(object sender, RoutedEventArgs e)
         {
-            if(grid_CreateTicket.Visibility == Visibility.Hidden)
+            if(grid_CreateTicket.Visibility == Visibility.Collapsed || grid_CreateTicket.Visibility == Visibility.Hidden)
             {
                 grid_CreateTicket.Visibility = Visibility.Visible;
+                titletext_View.Visibility = Visibility.Collapsed;
+                titletext_Create.Visibility = Visibility.Visible;
+                titletext_Reports.Visibility = Visibility.Collapsed;
+                grid_Report.Visibility = Visibility.Collapsed;
             }
         }
 
         private void button_SignOut_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainConnectionClass.staffID = "";
-            MainWindow.mainConnectionClass.staffFirstName = "";
-            MainWindow.mainConnectionClass.staffLastName = "";
-            MainWindow.mainConnectionClass.role = "";
 
             
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
+        }
+
+        private void button_Reports_Click(object sender, RoutedEventArgs e)
+        {
+            grid_CreateTicket.Visibility = Visibility.Collapsed;
+            titletext_View.Visibility = Visibility.Collapsed;
+            titletext_Create.Visibility = Visibility.Collapsed;
+            titletext_Reports.Visibility = Visibility.Visible;
+
+            grid_Report.Visibility = Visibility.Visible;
         }
 
 

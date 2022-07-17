@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Configuration;
 
 namespace ModernUI
 {
@@ -31,10 +32,7 @@ namespace ModernUI
         public static class mainConnectionClass
         {
 
-            private static string connect_query = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
-            public static MySqlConnection conn = new MySqlConnection(connect_query);
-
-            public static string query = "SELECT * FROM users WHERE username=@username && password=@password";
+            
 
             public static string staffID = "";
             public static string staffFirstName = "";
@@ -72,72 +70,81 @@ namespace ModernUI
             // THIS CHECKS THE FIELD OF USERNAME AND
             // PASSWORD IF NOT EMPTY. 
             ///////////////////////////////////////////////
-            MySqlCommand command = new MySqlCommand(mainConnectionClass.query, mainConnectionClass.conn);
 
-            command.Parameters.AddWithValue("@username", txtbox_Username.Text);
-            command.Parameters.AddWithValue("@password", txtbox_Password.Password);
+            string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
-            mainConnectionClass.conn.Open();
-            if (!string.IsNullOrEmpty(txtbox_Username.Text) && !string.IsNullOrEmpty(txtbox_Password.Password))
-            {
+            string query = "SELECT * FROM users WHERE username=@username && password=@password";
 
-                ///////////////////////////////////////////////
-                // This initializes the connection to database. 
-                // I inherited the mainconnection class to child class and used it
-                // 
-                // PASSWORD IF NOT EMPTY. 
-                ///////////////////////////////////////////////
-                ///
-                ///////////////////////////////////////////////
-                // This returns the result from the query above
-                // Line: 82. 
-                ///////////////////////////////////////////////
-                try
+            MySqlCommand command = new MySqlCommand(query, conn);
+
+                command.Parameters.AddWithValue("@username", txtbox_Username.Text);
+                command.Parameters.AddWithValue("@password", txtbox_Password.Password);
+
+                conn.Open();
+                if (!string.IsNullOrEmpty(txtbox_Username.Text) && !string.IsNullOrEmpty(txtbox_Password.Password))
                 {
-                    MySqlDataReader reader = command.ExecuteReader();
 
-                    if (reader.HasRows)
+                    ///////////////////////////////////////////////
+                    // This initializes the connection to database. 
+                    // I inherited the mainconnection class to child class and used it
+                    // 
+                    // PASSWORD IF NOT EMPTY. 
+                    ///////////////////////////////////////////////
+                    ///
+                    ///////////////////////////////////////////////
+                    // This returns the result from the query above
+                    // Line: 82. 
+                    ///////////////////////////////////////////////
+                    try
                     {
-                        while (reader.Read())
+                        using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            HomeWindow HomeWindow = new HomeWindow();
-                            txtbox_Username.Clear();
-                            txtbox_Password.Clear();
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    HomeWindow HomeWindow = new HomeWindow();
+                                    txtbox_Username.Clear();
+                                    txtbox_Password.Clear();
 
-                            mainConnectionClass.staffID = reader[0].ToString();
-                            mainConnectionClass.staffFirstName = reader[1].ToString();
-                            mainConnectionClass.staffLastName = reader[2].ToString();
-                            mainConnectionClass.role = reader[5].ToString();
-
-
-                            HomeWindow.txtbox_ReportedByStaffID.Text = mainConnectionClass.staffID;
-                            HomeWindow.txtbox_ReportedByStaffName.Text = mainConnectionClass.staffFirstName + " " + mainConnectionClass.staffLastName;
-                            HomeWindow.text_LoggedInAs.Text += mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
-                            HomeWindow.text_LoggedInAs.Text += ", " + mainConnectionClass.staffFirstName;
-
-                            HomeWindow.txtbox_Role.Text = mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
-
-                            _ = mainConnectionClass.role == "1" ? HomeWindow.grid_Supervisor.Visibility = Visibility.Visible : HomeWindow.grid_Supervisor.Visibility = Visibility.Collapsed;
+                                    mainConnectionClass.staffID = reader[0].ToString();
+                                    mainConnectionClass.staffFirstName = reader[1].ToString();
+                                    mainConnectionClass.staffLastName = reader[2].ToString();
+                                    mainConnectionClass.role = reader[5].ToString();
 
 
-                            this.Close();
-                            HomeWindow.Show();
+                                    HomeWindow.txtbox_ReportedByStaffID.Text = mainConnectionClass.staffID;
+                                    HomeWindow.txtbox_ReportedByStaffName.Text = mainConnectionClass.staffFirstName + " " + mainConnectionClass.staffLastName;
+                                    HomeWindow.text_LoggedInAs.Text += mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
+                                    HomeWindow.text_LoggedInAs.Text += ", " + mainConnectionClass.staffFirstName;
 
-                            
+                                    HomeWindow.txtbox_Role.Text = mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
+
+                                    _ = mainConnectionClass.role == "1" ? HomeWindow.grid_Supervisor.Visibility = Visibility.Visible : HomeWindow.grid_Supervisor.Visibility = Visibility.Collapsed;
+
+
+                                    this.Close();
+                                    HomeWindow.Show();
+                                }
+                                conn.Close();
+                            }
+                            else
+                            {
+                                conn.Close();
+                                MessageBox.Show("mali bonak");
+                            }
+                            reader.Close();
                         }
-                        mainConnectionClass.conn.Close();
+
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        mainConnectionClass.conn.Close();
-                        MessageBox.Show("mali bonak");
+                        MessageBox.Show(ex.Message);
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+
+                
 
         }
 
