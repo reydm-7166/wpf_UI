@@ -11,7 +11,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using System.Configuration;
 
 namespace ModernUI
 {
