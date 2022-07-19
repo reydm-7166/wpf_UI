@@ -842,12 +842,37 @@
 
             <!--Report GRID-->
             <Grid Grid.RowSpan="3" Margin="242,140,26,-25" x:Name="grid_Report" Visibility="Visible">
-        
-                <Border BorderBrush="#ACB0AF" BorderThickness="1" Margin="32,34,674,423" CornerRadius="10">
-                    <TextBlock x:Name="txtblock_TicketCountLabel" HorizontalAlignment="Left" Padding="20,40,0,0" Text="Ticket Count" TextWrapping="Wrap" VerticalAlignment="Top" Height="140" Width="301" TextAlignment="Left" LineHeight="14" FontSize="26"/>
-                </Border>
-                <TextBlock x:Name="txtblock_TicketCount" HorizontalAlignment="Left" Margin="71,118,0,0" Text="55" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="131" FontSize="40" TextAlignment="Right"/>
 
+                <Grid Background="Green"  Margin="32,34,228,57">
+                    <Grid Background="Blue" Margin="240,41,16,27">
+                        <TextBlock x:Name="txtblock_TicketCountLabel" Foreground="LightGray" HorizontalAlignment="Left" Padding="20,40,0,0" Text="Ticket Count" TextWrapping="Wrap" VerticalAlignment="Top" Height="136" Width="320" TextAlignment="Center" LineHeight="14" FontSize="26" Margin="115,28,0,0"/>
+                        <TextBlock x:Name="txtblock_TicketCount" Foreground="White" HorizontalAlignment="Left" Margin="256,172,0,0" Text="55" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="84" TextAlignment="Right" FontSize="40"/>
+                    </Grid>
+
+                    <Grid Background="Blue" Margin="14,26,540,404">
+                        <TextBlock x:Name="txtblock_OpenTickets" Foreground="White" HorizontalAlignment="Left" Margin="97,36,0,0" Text="55" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="85" TextAlignment="Right" FontSize="30"/>
+                        <TextBlock x:Name="txtblock_OpenTicketsLabel" HorizontalAlignment="Left" Foreground="White" Margin="61,6,0,0" Text="Open Tickets" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="117" FontSize="16" TextAlignment="Right"/>
+                    </Grid>
+                    <Grid Background="Blue" Margin="16,126,538,304">
+                        <TextBlock x:Name="txtblock_PendingTickets" Foreground="White" HorizontalAlignment="Left" Margin="97,36,0,0" Text="55" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="85" TextAlignment="Right" FontSize="30"/>
+                        <TextBlock x:Name="txtblock_PendingTicketsLabel" HorizontalAlignment="Left" Foreground="White" Margin="63,6,0,0" Text="Pending Tickets" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="117" FontSize="16" TextAlignment="Right"/>
+                    </Grid>
+                    <Grid Background="Blue" Margin="18,226,536,204">
+                        <TextBlock x:Name="txtblock_ServiceRequest" Foreground="White" HorizontalAlignment="Left" Margin="97,36,0,0" Text="55" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="85" TextAlignment="Right" FontSize="30"/>
+                        <TextBlock x:Name="txtblockServiceRequestLabel" HorizontalAlignment="Left" Foreground="White" Margin="4,6,0,0" Text="Service Request Tickets" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="174" FontSize="16" TextAlignment="Right"/>
+                    </Grid>
+                    <Grid Background="Blue" Margin="18,324,536,106">
+                        <TextBlock x:Name="txtblock_ChangeRequest" Foreground="White" HorizontalAlignment="Left" Margin="97,36,0,0" Text="55" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="85" TextAlignment="Right" FontSize="30"/>
+                        <TextBlock x:Name="txtblock_ChangeRequestLabel" HorizontalAlignment="Center" Foreground="White" Margin="0,6,0,0" Text="Change Request Tickets" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="172" FontSize="16" TextAlignment="Right"/>
+                    </Grid>
+                    <Grid Background="Blue" Margin="18,420,536,10">
+                        <TextBlock x:Name="txtblock_IncidentTickets" Foreground="White" HorizontalAlignment="Left" Margin="97,36,0,0" Text="55" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="85" TextAlignment="Right" FontSize="30"/>
+                        <TextBlock x:Name="txtblock_IncidentTicketsLabel" HorizontalAlignment="Left" Foreground="White" Margin="64,6,0,0" Text="Incident Tickets" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="118" FontSize="16" TextAlignment="Right"/>
+                    </Grid>
+
+
+
+                </Grid>
             </Grid>
 
 
