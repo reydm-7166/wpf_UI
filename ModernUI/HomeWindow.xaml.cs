@@ -24,13 +24,69 @@ namespace ModernUI
         public HomeWindow()
         {
             InitializeComponent();
-            //text_TicketAssignedTo.Text = String.Empty;
-            //txtbox_TicketAssignedTo.Text = "PREDEFINED"
+
             Random rnd = new Random();
             txtbox_ticketID.Text = rnd.Next(100, 100000).ToString();
             combo();
+
         }
 
+        /// <summary>
+        /// function to get the data from the tickets table and show it to the reports. ## reports ticket tab ###
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="control"></param>
+
+        void TicketData(string query, int control)
+        {
+            
+            string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
+            MySqlConnection conn = new MySqlConnection(connectionString);
+
+            MySqlCommand command = new MySqlCommand(query, conn);
+            conn.Open();
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    reader.GetString(0);
+                    switch (control)
+                    {
+                        case 0:
+                            txtblock_TicketCount.Text = reader.GetString(0);
+                            break;
+                        case 1:
+                            txtblock_OpenTickets.Text = reader.GetString(0);
+                            break;
+                        case 2:
+                            txtblock_PendingTickets.Text = reader.GetString(0);
+                            break;
+                        case 3:
+                            txtblock_ServiceRequest.Text = reader.GetString(0);
+                            break;
+                        case 4:
+                            txtblock_ChangeRequest.Text = reader.GetString(0);
+                            break;
+                        case 5:
+                            txtblock_IncidentTickets.Text = reader.GetString(0);
+                            break;
+                    }
+
+                }
+                conn.Close();
+            }
+            reader.Close();
+
+            
+
+        }  
+
+        /// <summary>
+        /// shows the first name and last name of the available staff users in the combobox. ### create ticket tab ###
+        /// </summary>
         void combo()
         {
             string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
@@ -75,7 +131,7 @@ namespace ModernUI
 
 
         /////// TICKET PROBLEM  //////////////
-        ///
+
         private void text_TicketProblem_MouseDown(object sender, MouseButtonEventArgs e)
         {
             txtbox_TicketProblem.Focus();
@@ -182,15 +238,60 @@ namespace ModernUI
             titletext_Reports.Visibility = Visibility.Visible;
 
             grid_Report.Visibility = Visibility.Visible;
+
+            /// Calls function reportsData when clicked /// ## reports ticket tab ###
+            reportsData();
+            
+        }
+
+        /// <summary>
+        /// this function gets the data from database. ### reports ticket tab ###
+        /// </summary>
+        void reportsData()
+        {
+            //All TICKETS PARAMETER ////
+            string allQuery = "SELECT COUNT(id) AS TicketCount FROM tickets;";
+            int alltxtbox = 0;
+            TicketData(allQuery, alltxtbox);
+
+            //OPEN TICKETS PARAMETER ////
+            int opentxbox = 1;
+            string openTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
+            TicketData(openTickets, opentxbox);
+
+            //CLOSED TICKETS PARAMETER ////
+            int closetxbox = 1;
+            string closeTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
+            TicketData(closeTickets, closetxbox);
+
+            //SERVICE TICKETS PARAMETER ////
+            int servicetxbox = 1;
+            string serviceTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
+            TicketData(serviceTickets, servicetxbox);
+
+            //CHANGE REQUEST TICKETS PARAMETER ////
+            int changetxbox = 1;
+            string changeTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
+            TicketData(changeTickets, changetxbox);
+
+            //INCIDENT TICKETS PARAMETER ////
+            int incidenttxbox = 1;
+            string incidentTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
+            TicketData(incidentTickets, incidenttxbox);
         }
 
 
-
+        //txtblock_TicketCount.Text = 
+        //txtblock_OpenTickets.Text =
+        //txtblock_PendingTickets.Text =
+        //txtblock_ServiceRequest.Text =
+        //txtblock_ChangeRequest.Text =
+        //txtblock_IncidentTickets.Text =
 
         /////// TICKET REPORTED BY THE USER ID  //////////////
 
     }
 
-    
+
 
 }
