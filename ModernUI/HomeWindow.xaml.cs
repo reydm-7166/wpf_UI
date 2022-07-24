@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 
 
@@ -28,7 +29,23 @@ namespace ModernUI
             Random rnd = new Random();
             txtbox_ticketID.Text = rnd.Next(100, 100000).ToString();
             combo();
+            dataGrid();
 
+        }
+
+        void dataGrid()
+        {
+            string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            MySqlCommand cmd = new MySqlCommand("select number As 'Ticket Number', issue_title As 'Ticket Category', problem As 'Ticket Problem', status As 'Ticket Status', date_created As 'Date Created' from tickets", connection);
+            connection.Open();
+            DataTable dt = new DataTable();
+            dt.Load(cmd.ExecuteReader());
+            connection.Close();
+
+            dtGrid.DataContext = dt;
         }
 
         /// <summary>
@@ -224,6 +241,10 @@ namespace ModernUI
             titletext_Create.Visibility = Visibility.Collapsed;
             titletext_Reports.Visibility = Visibility.Collapsed;
             grid_Report.Visibility = Visibility.Collapsed;
+            grid_ViewTickets.Visibility = Visibility.Visible;
+
+            ///calls datagrid function
+            dataGrid();
         }
 
         private void button_CreateTicket_Click(object sender, RoutedEventArgs e)
