@@ -163,39 +163,56 @@ namespace ModernUI
                 text_TicketDetails.Visibility = Visibility.Visible;
         }
 
+         
+        /// <summary>
+        /// TICKET INSERT ON DATABASE
+        /// </summary>
+
         private void button_Insert_Click(object sender, RoutedEventArgs e)
         {
-            try
+            /// <summary>
+            /// CONDITIONALS. Txtbox must not be empty or on default. Needs sufficient and appropriate input
+            /// </summary>
+            if (combobox_TicketCategory.Text != "Ticket Category" && txtbox_TicketProblem.Text != ""
+                && txtbox_TicketDetails.Text != "" && combobox_AssignedTo.Text != "Assign To ..."
+                && combobox_TicketStatus.Text != "Select Status ...")
             {
-                string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
-
-                MySqlConnection conn = new MySqlConnection(connectionString);
-
-                string query = "INSERT INTO mydb.tickets(user_id, number, issue_title, problem, details, reported_by_id, reported_by_name, assigned_to, status) VALUES('" + int.Parse(txtbox_ReportedByStaffID.Text) + "','" + txtbox_ticketID.Text + "','" + combobox_TicketCategory.Text + "','" + txtbox_TicketProblem.Text + "','" + txtbox_TicketDetails.Text + "','" + txtbox_ReportedByStaffID.Text + "','" + txtbox_ReportedByStaffName.Text + "','" + combobox_AssignedTo.Text + "','" + combobox_TicketStatus.Text + "')";
-
-                MySqlCommand command = new MySqlCommand(query, conn);
-                conn.Open();
-
-
-                if (command.ExecuteNonQuery() == 1)
+                try
                 {
-                    MessageBox.Show("Ticket Submitted Successfully");
-                    txtbox_TicketProblem.Clear();
-                    txtbox_TicketDetails.Clear();
-                    combobox_TicketCategory.SelectedIndex = 0;
-                    combobox_AssignedTo.SelectedIndex = 0;
-                    combobox_TicketStatus.SelectedIndex = 0;
+                    string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
+
+                    MySqlConnection conn = new MySqlConnection(connectionString);
+
+                    string query = "INSERT INTO mydb.tickets(user_id, number, issue_title, problem, details, reported_by_id, reported_by_name, assigned_to, status) VALUES('" + int.Parse(txtbox_ReportedByStaffID.Text) + "','" + txtbox_ticketID.Text + "','" + combobox_TicketCategory.Text + "','" + txtbox_TicketProblem.Text + "','" + txtbox_TicketDetails.Text + "','" + txtbox_ReportedByStaffID.Text + "','" + txtbox_ReportedByStaffName.Text + "','" + combobox_AssignedTo.Text + "','" + combobox_TicketStatus.Text + "')";
+
+                    MySqlCommand command = new MySqlCommand(query, conn);
+                    conn.Open();
+
+
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Ticket Submitted Successfully");
+                        txtbox_TicketProblem.Clear();
+                        txtbox_TicketDetails.Clear();
+                        combobox_TicketCategory.SelectedIndex = 0;
+                        combobox_AssignedTo.SelectedIndex = 0;
+                        combobox_TicketStatus.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Something is wrong! Please check the input carefully");
+                    }
+                    conn.Close();
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Something is wrong! Please check the input carefully");
+                    MessageBox.Show(ex.ToString());
                 }
-                conn.Close();
-            }
-            catch (Exception ex)
+            } else
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Fill in approriate input");
             }
+            
 
 
         }

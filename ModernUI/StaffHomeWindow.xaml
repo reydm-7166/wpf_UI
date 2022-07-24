@@ -23,8 +23,77 @@
             </LinearGradientBrush>
         </Border.Background>
 
+        <!--MAIN GRID-->
 
+        <!--Create ticket GRID-->
+
+        <Grid x:Name="grid_Supervisor" Margin="3,16,-3,-16" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" MinHeight="424.863"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <!--Page Title-->
+            <TextBlock x:Name="titletext_Create" Text="Create Ticket" Style="{StaticResource pageTitle}" Margin="-1,76,1,293" Grid.Row="1"/>
+            <TextBlock x:Name="titletext_View" Text="View Tickets" Style="{StaticResource pageTitle}" Margin="-1,76,1,293" Grid.Row="1" Visibility="Collapsed"/>
+            <TextBlock x:Name="titletext_Reports" Text="View Report" Style="{StaticResource pageTitle}" Margin="-1,76,1,293" Grid.Row="1" Visibility="Collapsed"/>
+
+            <!--Tabs-->
+            <Grid HorizontalAlignment="Left" 
+
+                    Margin="12,136,0,106"
+                    Width="245" Grid.RowSpan="2" 
+                    Grid.Row="1">
+
+                <!--Tabs-->
+                <Button x:Name="button_WorkTicket" Content="Work on a Ticket" 
+                            Foreground="#F8FEFA" 
+                            FontSize="25"
+                            Margin="0,227,0,0" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Height="50"
+                            Background="Transparent"
+                            BorderBrush="Transparent"/>
+                <!--Assigned Tickets-->
+                <Button x:Name="button_ViewTickets" Content="View Assigned Tickets" 
+                            Foreground="#F8FEFA" 
+                            FontSize="25"
+                            Margin="0,150,0,50" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Height="50"
+                            Background="Transparent"
+                            BorderBrush="Transparent"/>
+
+                <Button x:Name="button_SignOut" Content="Sign Out" 
+                            Foreground="#F8FEFA" 
+                            FontSize="25"
+                            Margin="0,312,0,0" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Height="50"
+                            Background="Transparent"
+                            BorderBrush="Transparent"/>
+
+                <Button x:Name="button_Exit" Content="Exit" 
+                            Foreground="#F8FEFA" 
+                            FontSize="25"
+                            Margin="0,412,0,0" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Height="50"
+                            Background="Transparent"
+                            BorderBrush="Transparent"/>
+            </Grid>
+
+            
+            
+            
+        </Grid>
     </Border>
-    
+
 
 </Window>

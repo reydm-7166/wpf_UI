@@ -88,13 +88,6 @@ namespace ModernUI
                     // This initializes the connection to database. 
                     // I inherited the mainconnection class to child class and used it
                     // 
-                    // PASSWORD IF NOT EMPTY. 
-                    ///////////////////////////////////////////////
-                    ///
-                    ///////////////////////////////////////////////
-                    // This returns the result from the query above
-                    // Line: 82. 
-                    ///////////////////////////////////////////////
                     try
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
@@ -120,18 +113,23 @@ namespace ModernUI
 
                                     HomeWindow.txtbox_Role.Text = mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
 
-                                    _ = mainConnectionClass.role == "1" ? HomeWindow.grid_Supervisor.Visibility = Visibility.Visible : HomeWindow.grid_Supervisor.Visibility = Visibility.Collapsed;
-
-
+                                    /// Creates the homestaffwindow object and shows it on else block
+                                    StaffHomeWindow staffHome = new StaffHomeWindow();
+                                    if (mainConnectionClass.role == "1")
+                                    {
+                                        HomeWindow.Show();
+                                    } else
+                                    {
+                                        staffHome.Show();
+                                    }
                                     this.Close();
-                                    HomeWindow.Show();
                                 }
                                 conn.Close();
                             }
                             else
                             {
                                 conn.Close();
-                                MessageBox.Show("mali bonak");
+                                MessageBox.Show("Wrong Credentials");
                             }
                             reader.Close();
                         }
