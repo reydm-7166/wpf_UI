@@ -159,6 +159,13 @@ namespace ModernUI
             txtbox_Username.Focus();
         }
 
+        private void button_SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            Signup signup = new Signup();
+            this.Close();
+            signup.Show();
+
+        }
     }
 
 }
