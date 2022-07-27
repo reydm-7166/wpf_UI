@@ -29,8 +29,6 @@ namespace ModernUI
             Random rnd = new Random();
             txtbox_ticketID.Text = rnd.Next(100, 100000).ToString();
             combo();
-            dataGrid();
-
         }
 
         void dataGrid()
@@ -39,14 +37,14 @@ namespace ModernUI
 
             MySqlConnection connection = new MySqlConnection(connectionString);
 
-            MySqlCommand cmd = new MySqlCommand("select number As 'Ticket Number', issue_title As 'Ticket Category', problem As 'Ticket Problem', status As 'Ticket Status', date_created As 'Date Created' from tickets", connection);
+            MySqlCommand cmd = new MySqlCommand("select number As 'Ticket Number', issue_title As 'Ticket Category', problem As 'Ticket Problem', details as 'Ticket Details', status As 'Ticket Status', date_created As 'Date Created' from tickets", connection);
             connection.Open();
             DataTable dt = new DataTable();
             dt.Load(cmd.ExecuteReader());
             connection.Close();
-
             dtGrid.DataContext = dt;
         }
+
 
         /// <summary>
         /// function to get the data from the tickets table and show it to the reports. ## reports ticket tab ###
@@ -56,7 +54,7 @@ namespace ModernUI
 
         void TicketData(string query, int control)
         {
-            
+
             string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
             MySqlConnection conn = new MySqlConnection(connectionString);
 
@@ -82,13 +80,7 @@ namespace ModernUI
                             txtblock_PendingTickets.Text = reader.GetString(0);
                             break;
                         case 3:
-                            txtblock_ServiceRequest.Text = reader.GetString(0);
-                            break;
-                        case 4:
-                            txtblock_ChangeRequest.Text = reader.GetString(0);
-                            break;
-                        case 5:
-                            txtblock_IncidentTickets.Text = reader.GetString(0);
+                            txtblock_ResolvedTickets.Text = reader.GetString(0);
                             break;
                     }
 
@@ -97,9 +89,9 @@ namespace ModernUI
             }
             reader.Close();
 
-            
 
-        }  
+
+        }
 
         /// <summary>
         /// shows the first name and last name of the available staff users in the combobox. ### create ticket tab ###
@@ -126,7 +118,7 @@ namespace ModernUI
                         combobox_AssignedTo.Items.Add(reader.GetString("firstname") + " " + reader.GetString("lastname"));
 
                     }
-                   conn.Close();
+                    conn.Close();
                 }
                 else
                 {
@@ -140,9 +132,6 @@ namespace ModernUI
                 MessageBox.Show(ex.Message);
             }
         }
-
-
-        
 
         /////// TICKET TITLE  //////////////
 
@@ -180,7 +169,7 @@ namespace ModernUI
                 text_TicketDetails.Visibility = Visibility.Visible;
         }
 
-         
+
         /// <summary>
         /// TICKET INSERT ON DATABASE
         /// </summary>
@@ -225,44 +214,49 @@ namespace ModernUI
                 {
                     MessageBox.Show(ex.ToString());
                 }
-            } else
+            }
+            else
             {
                 MessageBox.Show("Fill in approriate input");
             }
-            
+
 
 
         }
 
-            private void button_ViewTickets_Click(object sender, RoutedEventArgs e)
+        private void button_ViewTickets_Click(object sender, RoutedEventArgs e)
         {
-            grid_CreateTicket.Visibility = Visibility.Hidden;
-            titletext_View.Visibility = Visibility.Visible;
-            titletext_Create.Visibility = Visibility.Collapsed;
-            titletext_Reports.Visibility = Visibility.Collapsed;
-            grid_Report.Visibility = Visibility.Collapsed;
-            grid_ViewTickets.Visibility = Visibility.Visible;
+            if (grid_ViewTickets.Visibility == Visibility.Collapsed || grid_ViewTickets.Visibility == Visibility.Hidden)
+            {
 
+                grid_CreateTicket.Visibility = Visibility.Collapsed;
+                titletext_Create.Visibility = Visibility.Collapsed;
+                titletext_Reports.Visibility = Visibility.Collapsed;
+                grid_Report.Visibility = Visibility.Collapsed;
+
+                titletext_View.Visibility = Visibility.Visible;
+                grid_ViewTickets.Visibility = Visibility.Visible;
+            }
             ///calls datagrid function
             dataGrid();
         }
 
+
         private void button_CreateTicket_Click(object sender, RoutedEventArgs e)
         {
-            if(grid_CreateTicket.Visibility == Visibility.Collapsed || grid_CreateTicket.Visibility == Visibility.Hidden)
+            if (grid_CreateTicket.Visibility == Visibility.Collapsed || grid_CreateTicket.Visibility == Visibility.Hidden)
             {
                 grid_CreateTicket.Visibility = Visibility.Visible;
                 titletext_View.Visibility = Visibility.Collapsed;
                 titletext_Create.Visibility = Visibility.Visible;
                 titletext_Reports.Visibility = Visibility.Collapsed;
                 grid_Report.Visibility = Visibility.Collapsed;
+                grid_ViewTickets.Visibility = Visibility.Collapsed;
             }
         }
 
         private void button_SignOut_Click(object sender, RoutedEventArgs e)
         {
-
-            
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
@@ -270,16 +264,19 @@ namespace ModernUI
 
         private void button_Reports_Click(object sender, RoutedEventArgs e)
         {
-            grid_CreateTicket.Visibility = Visibility.Collapsed;
-            titletext_View.Visibility = Visibility.Collapsed;
-            titletext_Create.Visibility = Visibility.Collapsed;
-            titletext_Reports.Visibility = Visibility.Visible;
+            if (grid_Report.Visibility == Visibility.Collapsed || grid_Report.Visibility == Visibility.Hidden)
+            {
+                grid_CreateTicket.Visibility = Visibility.Collapsed;
+                titletext_View.Visibility = Visibility.Collapsed;
+                titletext_Create.Visibility = Visibility.Collapsed;
+                titletext_Reports.Visibility = Visibility.Visible;
 
-            grid_Report.Visibility = Visibility.Visible;
+                grid_Report.Visibility = Visibility.Visible;
+                grid_ViewTickets.Visibility = Visibility.Collapsed;
 
-            /// Calls function reportsData when clicked /// ## reports ticket tab ###
-            reportsData();
-            
+                /// Calls function reportsData when clicked /// ## reports ticket tab ###
+                reportsData();
+            }
         }
 
         /// <summary>
@@ -294,42 +291,58 @@ namespace ModernUI
 
             //OPEN TICKETS PARAMETER ////
             int opentxbox = 1;
-            string openTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
+            string openTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='OPEN';";
             TicketData(openTickets, opentxbox);
 
-            //CLOSED TICKETS PARAMETER ////
-            int closetxbox = 1;
-            string closeTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
-            TicketData(closeTickets, closetxbox);
+            //PENDING TICKETS PARAMETER ////
+            int closetxbox = 2;
+            string pendingTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
+            TicketData(pendingTickets, closetxbox);
 
-            //SERVICE TICKETS PARAMETER ////
-            int servicetxbox = 1;
-            string serviceTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
-            TicketData(serviceTickets, servicetxbox);
-
-            //CHANGE REQUEST TICKETS PARAMETER ////
-            int changetxbox = 1;
-            string changeTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
-            TicketData(changeTickets, changetxbox);
-
-            //INCIDENT TICKETS PARAMETER ////
-            int incidenttxbox = 1;
-            string incidentTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='PENDING';";
-            TicketData(incidentTickets, incidenttxbox);
+            //RESOLVED TICKETS PARAMETER ////
+            int servicetxbox = 3;
+            string resolvedTickets = "SELECT COUNT(id) AS TicketCount FROM tickets WHERE status='RESOLVED';";
+            TicketData(resolvedTickets, servicetxbox);
         }
 
+        void grid()
+        {
+            titletext_Create.Visibility = Visibility.Visible;
+            grid_CreateTicket.Visibility = Visibility.Visible;
 
-        //txtblock_TicketCount.Text = 
-        //txtblock_OpenTickets.Text =
-        //txtblock_PendingTickets.Text =
-        //txtblock_ServiceRequest.Text =
-        //txtblock_ChangeRequest.Text =
-        //txtblock_IncidentTickets.Text =
+            titletext_View.Visibility = Visibility.Collapsed;
+            titletext_Reports.Visibility = Visibility.Collapsed;
+            grid_Report.Visibility = Visibility.Collapsed;
+            grid_ViewTickets.Visibility = Visibility.Collapsed;
+        }
 
-        /////// TICKET REPORTED BY THE USER ID  //////////////
+        private void combobox_TicketCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
+
+        private void dtGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid row = (DataGrid)sender;
+            DataRowView row_select = row.SelectedItem as DataRowView;
+
+            if (row_select != null)
+            {
+                grid();
+
+                string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
+
+                MySqlConnection connection = new MySqlConnection(connectionString);
+
+                MySqlCommand cmd = new MySqlCommand("select * from tickets WHERE number = @ticketID", connection);
+
+                cmd.Parameters.AddWithValue("@ticketID", row_select["Ticket Number"].ToString());
+                connection.Open();
+
+                combobox_TicketCategory.Text = row_select["Ticket Category"].ToString();
+                text_TicketProblem.Text = row_select["Ticket Problem"].ToString();
+                text_TicketDetails.Text = row_select["Ticket Details"].ToString();
+            }
+        }
     }
-
-
-
 }

@@ -30,9 +30,6 @@ namespace ModernUI
         ///////////////////////////////////////////////
         public static class mainConnectionClass
         {
-
-            
-
             public static string staffID = "";
             public static string staffFirstName = "";
             public static string staffLastName = "";
@@ -108,7 +105,7 @@ namespace ModernUI
 
                                     HomeWindow.txtbox_ReportedByStaffID.Text = mainConnectionClass.staffID;
                                     HomeWindow.txtbox_ReportedByStaffName.Text = mainConnectionClass.staffFirstName + " " + mainConnectionClass.staffLastName;
-                                    HomeWindow.text_LoggedInAs.Text += mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
+                                    HomeWindow.text_LoggedInAs.Text += "Supervisor";
                                     HomeWindow.text_LoggedInAs.Text += ", " + mainConnectionClass.staffFirstName;
 
                                     HomeWindow.txtbox_Role.Text = mainConnectionClass.role == "1" ? "Supervisor" : "Staff User";
@@ -120,7 +117,10 @@ namespace ModernUI
                                         HomeWindow.Show();
                                     } else
                                     {
-                                        staffHome.Show();
+                                        staffHome.text_LoggedInAs.Text += "Support Staff";
+                                        staffHome.text_LoggedInAs.Text += ", " + mainConnectionClass.staffFirstName;
+
+                                    staffHome.Show();
                                     }
                                     this.Close();
                                 }
@@ -140,9 +140,6 @@ namespace ModernUI
                         MessageBox.Show(ex.Message);
                     }
                 }
-
-                
-
         }
 
 
