@@ -734,7 +734,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock x:Name="text_ticketID" 
-                            Text="Ticket ID" 
+                            Text="Ticket IDDDD" 
                             Style="{StaticResource textHint}" 
                             Grid.ColumnSpan="2" Margin="116,1,-122,-1" />
                         <TextBox x:Name="txtbox_ticketID"
