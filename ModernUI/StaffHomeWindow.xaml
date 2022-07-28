@@ -609,7 +609,7 @@
                                         IsHitTestVisible="False" 
                                         FontSize="15" 
                                         Foreground="Gray" 
-                                        Text="Ticket Category"/>
+                                        Text="Ticket Categoryy"/>
 
                             <ComboBoxItem Height="35" FontSize="15">
                                 <TextBlock 
