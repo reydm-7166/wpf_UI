@@ -850,7 +850,7 @@
                 <Grid HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top">
 
                     <Grid HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top">
-                        <DataGrid x:Name="dtGrid" IsReadOnly = "true" HorizontalAlignment="Center" Height="521" VerticalAlignment="Top" Width="950" ItemsSource="{Binding}" GridLinesVisibility="All" FontSize="20" ItemStringFormat="{}{0:dd/MM/yy}" AutoGeneratingColumn="OnAutoGeneratingColumn">
+                        <DataGrid x:Name="dtGrid" IsReadOnly = "true" HorizontalAlignment="Center" Height="521" VerticalAlignment="Top" Width="950" ItemsSource="{Binding}" GridLinesVisibility="All" FontSize="20" ItemStringFormat="{}{0:dd/MM/yy}" AutoGeneratingColumn="OnAutoGeneratingColumn" ColumnWidth="*">
                             <DataGrid.Columns>
 
                             </DataGrid.Columns>
@@ -868,7 +868,8 @@
                     <ColumnDefinition Width="393*"/>
                     <ColumnDefinition Width="619*"/>
                 </Grid.ColumnDefinitions>
-                <DataGrid x:Name="dtGridAccounts" IsReadOnly = "true" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="566" ItemsSource="{Binding}" GridLinesVisibility="All" ColumnWidth="*" FontSize="20"  Grid.ColumnSpan="2" Margin="26,29,0,0"/>                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Height="51" Margin="251,206,0,0" VerticalAlignment="Top" Width="283" Grid.Column="1" RenderTransformOrigin="0.467,0.606">
+                <DataGrid x:Name="dtGridAccounts" IsReadOnly = "true" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="566" ItemsSource="{Binding}" GridLinesVisibility="All" ColumnWidth="*" FontSize="20"  Grid.ColumnSpan="2" Margin="26,29,0,0" ColumnWidth="*"/>                
+                    <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Height="51" Margin="251,206,0,0" VerticalAlignment="Top" Width="283" Grid.Column="1" RenderTransformOrigin="0.467,0.606">
                     <TextBox x:Name="textBox" Text="TextBox" TextWrapping="Wrap" Width="120"/>
                 </ComboBox>
                 <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="51" Margin="249,81,0,0" VerticalAlignment="Top" Width="169" Grid.Column="1"/>
