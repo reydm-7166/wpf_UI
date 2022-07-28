@@ -103,7 +103,7 @@ namespace ModernUI
 
         private void txtLastname_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtbox_Lastname.Text) && txtbox_Lastname.Text.Length > 0)
+            if (!string.IsNullOrEmpty(txtbox_Lastname.Text) && txtbox_Lastname.Text.Length > 1)
                 textLastname.Visibility = Visibility.Collapsed;
             else
                 textLastname.Visibility = Visibility.Visible;
