@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -29,6 +29,24 @@ namespace ModernUI
             Random rnd = new Random();
             txtbox_ticketID.Text = rnd.Next(100, 100000).ToString();
             combo();
+            dataGridAccounts();
+            dataGrid();
+        }
+
+        void dataGridAccounts()
+        {
+            string connectionString = "SERVER=localhost;DATABASE=mydb;UID=root;PASSWORD=admin;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            MySqlCommand cmd = new MySqlCommand("select id As 'User ID', firstname As 'First Name', lastname As 'Last Name', username As 'Username', role As 'Position' from users", connection);
+            connection.Open();
+            DataTable dta = new DataTable();
+            dta.Load(cmd.ExecuteReader());
+            connection.Close();
+
+            dtGridAccounts.DataContext = dta;
+
         }
 
         void dataGrid()
@@ -236,6 +254,7 @@ namespace ModernUI
 
                 titletext_View.Visibility = Visibility.Visible;
                 grid_ViewTickets.Visibility = Visibility.Visible;
+                grid_ManageAccounts.Visibility = Visibility.Collapsed;
             }
             ///calls datagrid function
             dataGrid();
@@ -252,7 +271,22 @@ namespace ModernUI
                 titletext_Reports.Visibility = Visibility.Collapsed;
                 grid_Report.Visibility = Visibility.Collapsed;
                 grid_ViewTickets.Visibility = Visibility.Collapsed;
+                grid_ManageAccounts.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void button_ManageAccounts_Click(object sender, RoutedEventArgs e)
+        {
+            grid_ManageAccounts.Visibility = Visibility.Visible;
+            grid_CreateTicket.Visibility = Visibility.Collapsed;
+            titletext_View.Visibility = Visibility.Collapsed;
+            titletext_Create.Visibility = Visibility.Collapsed;
+            titletext_Reports.Visibility = Visibility.Collapsed;
+            grid_Report.Visibility = Visibility.Collapsed;
+            grid_ViewTickets.Visibility = Visibility.Collapsed;
+
+            ///calls datagrid function
+            dataGridAccounts();
         }
 
         private void button_SignOut_Click(object sender, RoutedEventArgs e)
@@ -273,6 +307,7 @@ namespace ModernUI
 
                 grid_Report.Visibility = Visibility.Visible;
                 grid_ViewTickets.Visibility = Visibility.Collapsed;
+                grid_ManageAccounts.Visibility = Visibility.Collapsed;
 
                 /// Calls function reportsData when clicked /// ## reports ticket tab ###
                 reportsData();
@@ -314,11 +349,7 @@ namespace ModernUI
             titletext_Reports.Visibility = Visibility.Collapsed;
             grid_Report.Visibility = Visibility.Collapsed;
             grid_ViewTickets.Visibility = Visibility.Collapsed;
-        }
-
-        private void combobox_TicketCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            grid_ManageAccounts.Visibility = Visibility.Collapsed;
         }
 
         private void dtGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -344,5 +375,18 @@ namespace ModernUI
                 text_TicketDetails.Text = row_select["Ticket Details"].ToString();
             }
         }
+
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(System.DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy";
+        }
+
+        /// <summary>
+        /// function to get the data from the tickets table and show it to the reports. ## reports ticket tab ###
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="control"></param>
+
     }
 }
